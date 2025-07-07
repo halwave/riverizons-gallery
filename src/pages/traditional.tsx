@@ -1,16 +1,18 @@
-import { useState, useEffect } from 'react'
-import ArtworkPreview from '../components/ArtworkPreview'
-import {fetchArtworks } from '../utils/api'
-import type { Artwork } from '../types/artwork'
+import { useEffect, useState } from "react"
+import ArtworkPreview from "../components/ArtworkPreview"
+import type { Artwork } from "../types/artwork"
+import { fetchTestArtworks } from "../utils/api"
 
 export default function Traditional() {
   const [artworks, setArtworks] = useState<Artwork[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null)
 
   useEffect(() => {
     const loadArtworks = async () => {
+      setLoading(true)
       try {
-        const traditionalArtworks = await fetchArtworks('traditional')
+        const traditionalArtworks = await fetchTestArtworks('traditional')
         setArtworks(traditionalArtworks)
       } catch (error) {
         console.error('Failed to load traditional artworks:', error)
@@ -32,7 +34,11 @@ export default function Traditional() {
           ))
         ) : (
           artworks.map(artwork => (
-            <ArtworkPreview key={artwork.id} artwork={artwork} />
+            <ArtworkPreview
+              key={artwork.id}
+              artwork={artwork}
+              onPreview={() => setSelectedArtwork(artwork)}
+            />
           ))
         )}
       </div>

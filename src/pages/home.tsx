@@ -1,17 +1,18 @@
-import { type ReactNode } from 'react'
 import { useState, useEffect } from 'react'
-import ArtworkPreview from '../components/ArtworkPreview'
 import type { Artwork } from '../types/artwork'
-import { fetchArtworks } from '../utils/api'
+import { fetchTestArtworks } from '../utils/api'
+import ArtworkPreview from '../components/ArtworkPreview'
 
 export default function Home() {
   const [artworks, setArtworks] = useState<Artwork[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null)
 
   useEffect(() => {
     const loadArtworks = async () => {
+      setLoading(true)
       try {
-        const featuredArtworks = await fetchArtworks('featured' as Artwork['category'])
+        const featuredArtworks = await fetchTestArtworks('featured')
         setArtworks(featuredArtworks)
       } catch (error) {
         console.error('Failed to load artworks:', error)
@@ -36,10 +37,16 @@ export default function Home() {
         <h2 className="text-2xl font-semibold mb-4">Featured Artworks</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {loading ? (
-            <div className="w-full h-64 bg-gray-100 rounded-lg animate-pulse" />
+            Array(9).fill(null).map((_, i) => (
+              <div key={i} className="w-full h-64 bg-gray-100 rounded-lg animate-pulse" />
+            ))
           ) : (
             artworks.map(artwork => (
-              <ArtworkPreview key={artwork.id} artwork={artwork} />
+              <ArtworkPreview
+                key={artwork.id}
+                artwork={artwork}
+                onPreview={() => setSelectedArtwork(artwork)}
+              />
             ))
           )}
         </div>

@@ -1,16 +1,19 @@
+// pages/Photography.tsx
 import { useState, useEffect } from 'react'
-import ArtworkPreview from '../components/ArtworkPreview'
-import {fetchArtworks } from '../utils/api'
 import type { Artwork } from '../types/artwork'
+import { fetchTestArtworks } from '../utils/api'
+import ArtworkPreview from '../components/ArtworkPreview'
 
 export default function Photography() {
   const [artworks, setArtworks] = useState<Artwork[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null)
 
   useEffect(() => {
     const loadArtworks = async () => {
+      setLoading(true)
       try {
-        const photographyArtworks = await fetchArtworks('photography')
+        const photographyArtworks = await fetchTestArtworks('photography')
         setArtworks(photographyArtworks)
       } catch (error) {
         console.error('Failed to load photography artworks:', error)
@@ -24,7 +27,7 @@ export default function Photography() {
 
   return (
     <div className="space-y-8">
-      <h2 className="text-3xl font-bold">Photography Art</h2>
+      <h2 className="text-3xl font-bold">Photography</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {loading ? (
           Array(9).fill(null).map((_, i) => (
@@ -32,7 +35,11 @@ export default function Photography() {
           ))
         ) : (
           artworks.map(artwork => (
-            <ArtworkPreview key={artwork.id} artwork={artwork} />
+            <ArtworkPreview
+              key={artwork.id}
+              artwork={artwork}
+              onPreview={() => setSelectedArtwork(artwork)}
+            />
           ))
         )}
       </div>

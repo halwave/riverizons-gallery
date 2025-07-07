@@ -1,16 +1,19 @@
+// pages/Digital.tsx
 import { useState, useEffect } from 'react'
-import ArtworkPreview from '../components/ArtworkPreview'
-import {fetchArtworks } from '../utils/api'
 import type { Artwork } from '../types/artwork'
+import { fetchTestArtworks } from '../utils/api'
+import ArtworkPreview from '../components/ArtworkPreview'
 
 export default function Digital() {
   const [artworks, setArtworks] = useState<Artwork[]>([])
   const [loading, setLoading] = useState(true)
+  const [selectedArtwork, setSelectedArtwork] = useState<Artwork | null>(null)
 
   useEffect(() => {
     const loadArtworks = async () => {
+      setLoading(true)
       try {
-        const digitalArtworks = await fetchArtworks('digital')
+        const digitalArtworks = await fetchTestArtworks('digital')
         setArtworks(digitalArtworks)
       } catch (error) {
         console.error('Failed to load digital artworks:', error)
@@ -32,7 +35,11 @@ export default function Digital() {
           ))
         ) : (
           artworks.map(artwork => (
-            <ArtworkPreview key={artwork.id} artwork={artwork} />
+            <ArtworkPreview
+              key={artwork.id}
+              artwork={artwork}
+              onPreview={() => setSelectedArtwork(artwork)}
+            />
           ))
         )}
       </div>
