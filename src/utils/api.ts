@@ -1,4 +1,8 @@
-import type { Artwork, ArtworkResponse } from '../types/artwork';
+import type {
+  Artwork,
+  ArtworkCategory,
+  ArtworkResponse,
+} from '../types/artwork';
 
 export const fetchArtworks = async (
   category: Artwork['category']
@@ -12,7 +16,7 @@ export const fetchArtworks = async (
 
 // Test data implementation
 export const fetchTestArtworks = async (
-  category: Artwork['category']
+  category?: Artwork['category']
 ): Promise<Artwork[]> => {
   // Simulated API delay
   await new Promise((resolve) => setTimeout(resolve, 500));
@@ -25,6 +29,7 @@ export const fetchTestArtworks = async (
         description: 'Watercolor painting of a mountain sunrise',
         imageUrl: '/test-images/traditional/mountain-sunrise.jpg',
         category: 'traditional',
+        isFeatured: true,
       },
       {
         id: 'trad-002',
@@ -32,6 +37,7 @@ export const fetchTestArtworks = async (
         description: 'Oil painting of a forest path',
         imageUrl: '/test-images/traditional/forest-path.jpg',
         category: 'traditional',
+        isFeatured: false,
       },
     ],
     digital: [
@@ -41,6 +47,7 @@ export const fetchTestArtworks = async (
         description: 'Digital art piece exploring cyberpunk themes',
         imageUrl: '/test-images/digital/cyber-dreams.jpg',
         category: 'digital',
+        isFeatured: true,
       },
       {
         id: 'dig-002',
@@ -48,6 +55,7 @@ export const fetchTestArtworks = async (
         description: 'Digital illustration of quantum mechanics',
         imageUrl: '/test-images/digital/quantum-flow.jpg',
         category: 'digital',
+        isFeatured: false,
       },
     ],
     photography: [
@@ -57,6 +65,7 @@ export const fetchTestArtworks = async (
         description: 'Nighttime cityscape photography',
         imageUrl: '/test-images/photography/city-lights.jpg',
         category: 'photography',
+        isFeatured: false,
       },
       {
         id: 'photo-002',
@@ -64,10 +73,19 @@ export const fetchTestArtworks = async (
         description: 'Nature photography of wildflowers',
         imageUrl: '/test-images/photography/wildflower-field.jpg',
         category: 'photography',
+        isFeatured: true,
       },
     ],
-    featured: [],
   };
 
+  if (!category) {
+    return Object.values(testData).flat();
+  }
+
   return testData[category] || [];
+};
+
+export const getFeaturedArtworks = async (): Promise<Artwork[]> => {
+  const allArtworks = await fetchTestArtworks();
+  return allArtworks.filter((artwork) => artwork.isFeatured);
 };
