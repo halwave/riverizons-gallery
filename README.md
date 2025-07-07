@@ -1,69 +1,83 @@
-# React + TypeScript + Vite
+# Riverizons Gallery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern art gallery website showcasing traditional, digital, and photography artwork. Built with React, Vite, and Tailwind CSS, featuring responsive design and full-screen artwork previews.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Responsive grid layout for artwork display
+- Full-screen artwork preview functionality
+- Category-based navigation (Traditional, Digital, Photography)
+- Loading states and error handling
+- TypeScript for type safety
+- Tailwind CSS for styling
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Prerequisites
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- Node.js (latest LTS version)
+- npm (comes with Node.js)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+### Installation
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# Clone the repository
+git clone https://github.com/halwave/riverizons-gallery.git
+
+# Navigate to project directory
+cd riverizons-gallery
+
+# Install dependencies
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Start development server
+npm run dev
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Open http://localhost:5173 in your browser
 ```
+
+## Build
+
+```bash
+# Build for production
+npm run build
+
+# Preview production build locally
+npm run preview
+```
+
+## Project Structure
+
+```plaintext
+src/
+├── assets/           # Processed assets (optimized by Vite)
+├── components/       # Reusable React components
+├── pages/           # Page components
+├── public/          # Static assets (served directly)
+│   └── test-images/ # Test artwork images
+├── types/           # TypeScript type definitions
+└── utils/           # Utility functions
+```
+
+## Contributing
+
+Contributions are welcome! Please submit a pull request with:
+
+1. Clear description of changes
+2. Updated tests if applicable
+3. Documentation updates if needed
+
+## License
+
+This project is licensed under the MIT License - see [LICENSE](LICENSE) for details.
+
+## Acknowledgments
+
+- Built with [Vite](https://vitejs.dev)
+- Styled with [Tailwind CSS](https://tailwindcss.com)
+- TypeScript for type safety
+- React for component architecture
