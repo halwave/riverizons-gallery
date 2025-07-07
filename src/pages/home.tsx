@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
-import type { Artwork } from '../types/artwork'
-import { fetchTestArtworks } from '../utils/api'
-import ArtworkPreview from '../components/ArtworkPreview'
+import { useEffect, useState } from "react"
+import ArtworkPreview from "../components/ArtworkPreview"
+import type { Artwork } from "../types/artwork"
+import { fetchTestArtworks } from "../utils/api"
 
 export default function Home() {
   const [artworks, setArtworks] = useState<Artwork[]>([])
@@ -35,13 +35,9 @@ export default function Home() {
 
       <section>
         <h2 className="text-2xl font-semibold mb-4">Featured Artworks</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {loading ? (
-            Array(9).fill(null).map((_, i) => (
-              <div key={i} className="w-full h-64 bg-gray-100 rounded-lg animate-pulse" />
-            ))
-          ) : (
-            artworks.map(artwork => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[400px]">
+          {loading ? null : (
+            artworks.map((artwork: Artwork) => (
               <ArtworkPreview
                 key={artwork.id}
                 artwork={artwork}
